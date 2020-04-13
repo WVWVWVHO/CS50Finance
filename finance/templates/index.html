@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <!--<th>Name</th>-->
+                <th>Shares</th>
+                <th>Avg. Price</th>
+                <th>Market Price</th>
+                <!--<th>Values(O)</th>-->
+                <th>Values(HKD)</th>
+                <th>P/L</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.symbol }}</td>
+                <!--<td>{{ stock.stock_name }}</td>-->
+                <td>{{ stock.shares }}</td>
+                <td>{{ stock.avg_price }}</td>
+                <td>{{ stock.mkt_price }}</td>
+                <!--<td>{{ stock.mkt_value }}</td>-->
+                <td>{{ stock.mkt_value_ex }}</td>
+                <td>{{((stock.mkt_price-stock.avg_price)/stock.avg_price)*100|round(2)}}%</td>
+                <td form action="/buy" method="POST" >
+                    <a href="{{ url_for('buy', symbol = stock.symbol) }}">
+                        <button class="btn btn-default" type="submit">
+                            Buy
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">Total Asset</td>
+                <td style="font-weight: bold;">{{ net_asset }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">Total Cost</td>
+                <td style="font-weight: bold;">{{ total_cost }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">Total P/L</td>
+                <td style="font-weight: bold;">{{ net_asset - total_cost }}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

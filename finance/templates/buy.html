@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+    {%if symbol%}
+        
+        <form action="{{ url_for('buy')}}" method="post">
+        <fieldset>
+            
+            <p>
+                Buy {{symbol}}
+            </p>
+            <div class="form-group">
+                <input class="form-control" name="shares" placeholder="Shares" type="integer"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="buy">Buy</button>
+            </div>
+        </fieldset>
+    
+    {% else %}
+    <form action="{{ url_for('buy')}}" method="post">
+        <fieldset>
+            
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control cap" name="symbol" placeholder="Symbol" type="text"/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="shares" placeholder="Shares" type="number" min="0"/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="buy_price" placeholder="Buy Price" step="0.001" type="number" min="0"/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="trans_date" placeholder="Transaction date" type="date"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="submit">Buy</button>
+            </div>
+        </fieldset>
+    </form>
+    {% endif %}
+{% endblock %}
